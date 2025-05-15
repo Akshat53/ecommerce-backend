@@ -1,4 +1,3 @@
-
 package com.ecommerce.model;
 
 import jakarta.persistence.*;

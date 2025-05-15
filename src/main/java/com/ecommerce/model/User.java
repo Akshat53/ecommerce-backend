@@ -32,6 +32,21 @@ public class User {
     @Column(nullable = false)
     private Role role;
     
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private UserDetail userDetail;
+    
+    @OneToMany(mappedBy = "seller", fetch = FetchType.LAZY)
+    private Set<Product> products = new HashSet<>();
+    
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Cart cart;
+    
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<ShippingAddress> addresses = new HashSet<>();
+    
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    private Set<Order> orders = new HashSet<>();
+    
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

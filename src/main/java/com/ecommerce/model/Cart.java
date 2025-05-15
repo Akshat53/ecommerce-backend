@@ -42,49 +42,7 @@ public class Cart {
     @Transient
     public BigDecimal getTotal() {
         return cartItems.stream()
-                .map(item -> item.getProduct().getPrice().multiply(new BigDecimal(item.getQuantity())))
+                .map(item -> item.getPrice().multiply(new BigDecimal(item.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-    
-    // Helper method to add item to cart
-    public void addItem(Product product, int quantity) {
-        // Check if product already in cart
-        for (CartItem item : cartItems) {
-            if (item.getProduct().getId().equals(product.getId())) {
-                item.setQuantity(item.getQuantity() + quantity);
-                return;
-            }
-        }
-        
-        // If not, add new item
-        CartItem newItem = new CartItem();
-        newItem.setCart(this);
-        newItem.setProduct(product);
-        newItem.setQuantity(quantity);
-        cartItems.add(newItem);
-    }
-    
-    // Helper method to update item quantity
-    public void updateItemQuantity(Long productId, int quantity) {
-        for (CartItem item : cartItems) {
-            if (item.getProduct().getId().equals(productId)) {
-                if (quantity > 0) {
-                    item.setQuantity(quantity);
-                } else {
-                    cartItems.remove(item);
-                }
-                return;
-            }
-        }
-    }
-    
-    // Helper method to remove item from cart
-    public void removeItem(Long productId) {
-        cartItems.removeIf(item -> item.getProduct().getId().equals(productId));
-    }
-    
-    // Helper method to clear cart
-    public void clear() {
-        cartItems.clear();
     }
 }

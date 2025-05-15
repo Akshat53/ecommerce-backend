@@ -10,28 +10,40 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user_details")
+@Table(name = "shipping_addresses")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDetail {
+public class ShippingAddress {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
     
-    @Column(name = "full_name", nullable = false, length = 100)
-    private String fullName;
+    @Column(name = "address_line1", nullable = false, length = 100)
+    private String addressLine1;
     
-    @Column(nullable = false, unique = true, length = 100)
-    private String email;
+    @Column(name = "address_line2", length = 100)
+    private String addressLine2;
     
-    @Column(name = "phone_number", length = 20)
-    private String phoneNumber;
+    @Column(nullable = false, length = 50)
+    private String city;
+    
+    @Column(nullable = false, length = 50)
+    private String state;
+    
+    @Column(name = "postal_code", nullable = false, length = 20)
+    private String postalCode;
+    
+    @Column(nullable = false, length = 50)
+    private String country;
+    
+    @Column(name = "is_default")
+    private Boolean isDefault = false;
     
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
